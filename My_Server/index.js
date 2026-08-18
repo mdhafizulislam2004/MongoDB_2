@@ -1,15 +1,19 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const port = 3000;
-// const cors = require("cors")
+const port = process.env.port||3000;
 app.use(express.json())
-// app.use(cors())
-
-// habib2004
+const cors = require("cors")
+app.use(cors())
 
 const uri = "mongodb+srv://simpleUSer:hafizul2004@cluster0.jdfwert.mongodb.net/?appName=Cluster0";
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -17,12 +21,6 @@ const client = new MongoClient(uri, {
         deprecationErrors: true,
     }
 });
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
-
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
