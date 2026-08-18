@@ -1,16 +1,43 @@
 const express = require('express');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const cors = require('cors');
-const port =  process.env.port ||3000;
-
-app.use(cors())
+const port = 3000;
+// const cors = require("cors")
 app.use(express.json())
+// app.use(cors())
 
+// habib2004
 
-app.get('/', (req, res) => {
-  res.send('MD.HAFIZUL ISLAm');
+const uri = "mongodb+srv://simpleUSer:hafizul2004@cluster0.jdfwert.mongodb.net/?appName=Cluster0";
+
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
 });
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+
+async function run() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+        // Ensures that the client will close when you finish/error
+        // await client.close();
+    }
+}
+run().catch(console.dir);
+
+
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
