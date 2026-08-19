@@ -12,7 +12,6 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
@@ -25,16 +24,18 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
+        const DBuser=client.db("DBuser")
+        const UserCollection=DBuser.collection("User")
 
             // Add Database Related Api Here 
 
-            app.post("/user",(req,res)=>{
+            app.post("/user",async (req,res)=>{
                 const newUSer=req.body
                 console.log("Hitting The User Post Api",newUSer);
+                const result=await UserCollection.insertOne(newUSer)
+                res.send(result)
                 
             })
-
-
 
 
         // Send a ping to confirm a successful connection
