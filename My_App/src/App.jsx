@@ -1,4 +1,6 @@
 import './App.css'
+const userData=fetch("http://localhost:3000/user")
+.then(res=>res.json())
 import Users from './Components/Users'
 
 function App() {
@@ -6,7 +8,7 @@ function App() {
   return (
     <>  
           <h1>Simple Card</h1>
-          <Users></Users>
+          <Users UserData={userData}></Users>
     </>
   )
 }

@@ -1,5 +1,11 @@
-const Users = () => {
+import { use, useState } from "react";
 
+const Users = ({UserData}) => {
+
+    const user=use(UserData)
+    console.log(user);
+    const[users,setUsers]=useState(user)
+    
 
 
     const submitHendaler=(e)=>{
@@ -21,6 +27,9 @@ const Users = () => {
         .then(data=>{
             console.log(data);
             if(data.insertedId){
+                newData._id=data.insertedId
+                const DataUser=[...users,newData]
+                setUsers(DataUser)
                 console.log("User Add Successfully");
             }
             return
@@ -38,6 +47,9 @@ const Users = () => {
                 <br />
                 <button>Add User</button>
             </form>
+            {
+                users.map(card=><p key={card._id}>{card.name},{card.email}</p>)
+            }
         </div>
     );
 };
