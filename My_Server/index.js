@@ -27,6 +27,14 @@ async function run() {
         const DBuser=client.db("DBuser")
         const UserCollection=DBuser.collection("User")
 
+
+        app.get("/user",async (req,res)=>{
+            const cursor=UserCollection.find()
+            const allvalus= await cursor.toArray()
+            res.send(allvalus)
+        })
+
+
             // Add Database Related Api Here 
 
             app.post("/user",async (req,res)=>{
